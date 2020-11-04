@@ -1,11 +1,21 @@
+import pytest
 from App.page.Mainpage import mainpage
 
 
-class TestAddmember:
-    def test_addmember(self):
+class TestAddmember():
+    def setup(self):
         self.app = mainpage()
-        result = self.app.goto_contract().goto_addcontract().goto_input().\
-            addcontract(name='测试一', gender='女', phone='15012349990').get_toast_text()
+        self.man = self.app.start()
 
+    def teardown(self):
+        self.app.goback()
+
+    @pytest.mark.parametrize("name,gender,phone", [('测试M', '女', '15034324332'), ('测试B', '男', '15032337322')])
+    def test_addmember(self, name, gender, phone):
+        # name = '测试五'
+        # gender = '女'
+        # phone = '15012349997'
+        result = self.man.goto_contract().goto_addcontract().goto_input().\
+            addcontract(name, gender, phone).get_toast_text()
         assert result == "添加成功"
 

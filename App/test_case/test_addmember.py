@@ -14,7 +14,7 @@ class TestAddmember():
     def test_addmember(self, name, gender, phone):
         # name = '测试五'
         # gender = '女'
-        # phone = '15012349997'
+        # phone = str(1501234)+str(random.randint(1000,9999))
         result = self.man.goto_contract().goto_addcontract().goto_input().\
             addcontract(name, gender, phone).get_toast_text()
         assert result == "添加成功"

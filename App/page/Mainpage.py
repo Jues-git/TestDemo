@@ -40,4 +40,6 @@ class mainpage(basefuc):
         return minepage(self.driver)
 
     def goback(self):
-        self.driver.back()
+            self.driver.back()
+            self.driver.back()
+

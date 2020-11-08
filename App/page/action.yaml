@@ -1,0 +1,15 @@
+goto_contract:
+  - MobileBy: XPATH
+    locator: "//*[@text='通讯录']"
+    action: click
+    content: "百度"
+
+goto_work:
+  - MobileBy: XPATH
+    locator: "//*[@text='工作台']"
+    action: click
+
+goto_mine:
+  - MobileBy: XPATH
+    locator: "//*[@text='我']"
+    action: click

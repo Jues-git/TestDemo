@@ -1,30 +1,22 @@
 import yaml
-from appium import webdriver
 from appium.webdriver.common.mobileby import MobileBy
+import random
+from App.page.MyDecorator import find_main_black
 
-from App.single import find_mainblack
 
+class Base_func:
 
-class basefuc:
-
-    main_black = [(MobileBy.ID, '#id'), (MobileBy.ID, '.class')]
-    contract_black = [(MobileBy.XPATH, '//*'), (MobileBy.XPATH, '//*')]
+    main_black = [(MobileBy.XPATH, '//*[@text="跳过"]')]
+    # contract_black = [(MobileBy.XPATH, '//*'), (MobileBy.XPATH, '//*')]
     max_num = 3
     error_num = 0
+    screenshot_name = str('screenshot') + str(random.randint(1, 100))
 
-    def __init__(self, driver: webdriver = None):
-        if self.driver is None:
-            caps = {"platformName": "Android", "deviceName": "127.0.0.1:7555", "appPackage": "com.tencent.wework",
-                    "appActivity": ".launch.LaunchSplashActivity", "noReset": "True", "dontStopAppOnReset": "true",
-                    'skipDeviceInitialization': 'true', 'newCommandTimeout': "60"}
-
-            self.driver = webdriver.Remote("http://localhost:4723/wd/hub", caps)
-            self.driver.implicitly_wait(5)
-        else:
-            self.driver = driver
+    def __init__(self, driver):
+        self.driver = driver
 
     # 添加黑名单装饰器
-    @find_mainblack
+    @find_main_black
     def find(self, by, locator=None):
         if locator is None:
             # 只有一个传参((By.ID , ".class"))
@@ -46,12 +38,12 @@ class basefuc:
         return result
 
     # 测试步骤yaml封装
-    def parse_yaml(self, fucname):
-        with open('action.yaml', encoding='utf-8') as f:
+    def parse_yaml(self, func_name):
+        with open('./page/action.yaml', encoding='utf-8') as f:
             data = yaml.safe_load(f)
-            steps = data[f"{fucname}"]
+            steps = data[func_name]
             for step in steps:
                 if 'click' == step["action"]:
-                    self.find(step["MobileBy"], step["locator"]).click()
+                    self.find(step["By"], step["locator"]).click()
                 elif 'send' == step["action"]:
-                    self.find(step["MobileBy"], step["locator"]).send_keys(step["content"])
+                    self.find(step["By"], step["locator"]).send_keys(step["content"])

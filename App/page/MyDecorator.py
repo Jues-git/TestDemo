@@ -1,35 +1,43 @@
+import allure
 
 def single(func):
     """
     单例模式（暂时不用）
-    :param func: basepage 的__init__ 构造函数，只初始化一次
+    :param func: base_fuc 的__init__ 构造函数，只初始化一次
     :return:
     """
     _instance = {}
     def wrapper(*args, **kwargs):
         if func in _instance:
-            return func(*args, **kwargs)
+            return _instance[func]
         else:
             _instance[func] = func(*args, **kwargs)
             return _instance[func]
     return wrapper
 
-def find_mainblack(func):
+def find_main_black(func):
     """"
     查找黑名单装饰器
     """
     def wrapper(*args, **kwargs):
-        # instance是basefuc的实例，args[0]获取self
+        from App.page.basepage import Base_func
+        # instance是 base_fuc的实例，args[0]获取self
         # 局部调用
-        from App.page.basepage import basefuc
-        instance: basefuc = args[0]
+        instance: Base_func = args[0]
         try:
             result = func(*args, **kwargs)
             return result
             instance.error_num = 0
+
         except Exception as e:
+            # 若发现异常，保存截图
+            instance.driver.save_screenshot('tmp.png')
+            with open('tmp.png', 'rb') as f:
+                photo = f.read()
+            allure.attach(photo, name="异常信息截图",
+                          attachment_type=allure.attachment_type.PNG)
             # 如果查询黑名单次数大于最大查询次数，抛出异常
-            if instance.error_num > instance.max_num
+            if instance.error_num > instance.max_num:
                 raise e
             # 查找黑名单 +1
             instance.error_num += 1

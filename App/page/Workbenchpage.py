@@ -1,10 +1,10 @@
-from App.page.basepage import basefuc
+from App.page.basepage import Base_func
 
 # 工作台页面
-class workbenchpage(basefuc):
+class workbenchpage(Base_func):
     def goto_clock(self):
         # 点击工作台
-        self.driver.find_element(MobileBy.XPATH, "//*[@text='工作台']").click()
+        self.find(MobileBy.XPATH, "//*[@text='工作台']").click()
         # 滚动查找打卡，点击进入
         self.driver.find_element(MobileBy.ANDROID_UIAUTOMATOR,
                                  'new UiScrollable(new UiSelector()\
@@ -12,6 +12,6 @@ class workbenchpage(basefuc):
                                  .scrollIntoView(new UiSelector()\
                                  .text("打卡").instance(0));').click()
         # 切换到外出打卡
-        self.driver.find_element(MobileBy.XPATH, "//*[@text='外出打卡']").click()
+        self.find(MobileBy.XPATH, "//*[@text='外出打卡']").click()
         # 打卡操作
-        self.driver.find_element(MobileBy.XPATH, '//*[contains(@text, "次外出")]').click()
+        self.find(MobileBy.XPATH, '//*[contains(@text, "次外出")]').click()

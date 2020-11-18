@@ -1,0 +1,4 @@
+colorama<1.0.0,>=0.2.7
+frida<15.0.0,>=14.0.0
+prompt-toolkit<4.0.0,>=2.0.0
+pygments<3.0.0,>=2.0.2

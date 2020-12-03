@@ -1,4 +1,3 @@
-import json
 import jsonpath
 import pytest
 
@@ -22,12 +21,21 @@ class Test_tag:
 
     # 编辑标签
     def test_edit_tag(self):
-        edit_res = self.main.edit_tag('etVUKCDwAAziERiSUWRpKWBuUu2l96WA', 'tag1_new_name')
-        print(json.dumps(edit_res.json(), indent=2))
+        list = self.main.get_tag_list()
+        tag_list = jsonpath.jsonpath(list.json(), '$..tag[?(@.name=="tag1")]')
+        edit_res = self.main.edit_tag(tag_list[0]['id'], 'tag1_new_name')
         assert edit_res.status_code == 200
         assert edit_res.json()['errcode'] == 0
+        list_new = self.main.get_tag_list()
+        assert 'tag1_new_name' in jsonpath.jsonpath(list_new.json(), '$..name')
+
+    # 删除一个标签tag
+    def test_del_tag(self):
         list = self.main.get_tag_list()
-        assert 'tag1_new_name' in jsonpath.jsonpath(list.json(), '$..name')
+        id_list = jsonpath.jsonpath(list.json(), '$..id')
+        del_res = self.main.del_tag(id_list[1])
+        assert del_res.status_code == 200
+        assert del_res.json()['errcode'] == 0
 
     # 数据清理
     def test_clean_tag(self):

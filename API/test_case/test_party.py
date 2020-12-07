@@ -11,7 +11,7 @@ class Test_party:
         self.man = party()
 
     def test_create_party(self):
-        name = '北京研发中心'
+        name = '南京研发中心'
         res = self.man.create_party(name)
         print(json.dumps(res.json(), indent=2, ensure_ascii=False))
         assert res.status_code == 200

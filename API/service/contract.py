@@ -2,6 +2,10 @@ from API.service.baseapi import BaseApi
 
 
 class contract(BaseApi):
+    def __init__(self):
+        sec = 'nh0T_jDjYFssVFdqmzr34g-2vbZTocIKR5dvPUkjX8A'
+        super(contract, self).__init__(sec)
+
     # 创建成员
     def create_contract(self, name, phone):
         data = {"method": "post",

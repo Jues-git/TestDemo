@@ -3,6 +3,10 @@ from API.service.baseapi import BaseApi
 
 # 部门信息类
 class party(BaseApi):
+    def __init__(self):
+        sec = 'nh0T_jDjYFssVFdqmzr34g-2vbZTocIKR5dvPUkjX8A'
+        super(party, self).__init__(sec)
+        
     # 创建部门
     def create_party(self, name):
         data = {"method": "post",

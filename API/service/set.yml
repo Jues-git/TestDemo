@@ -1,0 +1,35 @@
+host:
+  test: https://qyapi.weixin.qq.com
+  dev: https://qyapi.weixin.qq.com
+  pro: https://qyapi.weixin.qq.com
+
+# 部门信息
+# 获取部门列表
+department_list:
+  path: /cgi-bin/department/list
+  method: post
+  params:
+    access_token: $token
+    id : $value
+  json: None
+
+create_party:
+  path: /cgi-bin/department/create
+  method: post
+  params:
+    access_token: $token
+  json:
+    name: $value
+    parentid: 1
+
+get_party_list:
+  path: /cgi-bin/user/simplelist
+  method: get
+  params:
+    access_token: $token
+    department_id: $value
+
+
+
+
+

@@ -10,8 +10,9 @@ class Test_party:
     def setup_class(self):
         self.man = party()
 
+    # 创建部门
     def test_create_party(self):
-        name = '南京研发中心'
+        name = '销售部/广州'
         res = self.man.create_party(name)
         print(json.dumps(res.json(), indent=2, ensure_ascii=False))
         assert res.status_code == 200
@@ -40,3 +41,19 @@ class Test_party:
         name = "Li8950"
         res = self.man.get_contract_by_name(name, 3)
         print(res)
+
+    def test_del_party(self):
+        par_id = 7
+        res = self.man.del_party(par_id)
+        if res.json()['errcode'] == 0:
+            print("删除部门成功")
+            id_res = self.man.get_partyid()
+            id_list = jsonpath.jsonpath(id_res.json(), '$..id')
+            assert par_id not in id_list
+        else:
+            print(res.json()['errmsg'])
+
+    def test_department_list(self):
+        res = self.man.department_list(2)
+        print(res.json())
+

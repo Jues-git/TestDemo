@@ -16,9 +16,13 @@ class Test_contract:
         phone = '133' + str(random.randint(10000000, 99999999))
         name = 'Li' + str(random.randint(1, 10000))
         res = self.man.create_contract(name, phone)
-        print(json.dumps(res.json(), indent=2, ensure_ascii=False))
+        print(json.dumps(res.json(), indent=2))
         assert res.status_code == 200
         assert res.json()['errcode'] == 0
+        # 断言新增成员在部门列表
+        list_res = self.pa.get_party_list(4)
+        name_list = jsonpath.jsonpath(list_res.json(), '$..name')
+        assert name in name_list
 
     # 根据userid获取成员信息
     def test_get_contract(self):
@@ -69,11 +73,3 @@ class Test_contract:
         print(batch_res.json())
         assert batch_res.status_code == 200
         assert batch_res.json()['errcode'] == 0
-
-
-
-
-
-
-
-

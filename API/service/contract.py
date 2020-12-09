@@ -18,7 +18,7 @@ class contract(BaseApi):
                     "mobile": phone,
                     "position": "软件测试工程师",
                     "gender": "1",
-                    "department": "3",
+                    "department": "5",
                     "email": name + "@gzdev.com"
                 }}
         res = self.send(data)
